@@ -1,0 +1,23 @@
+# Add a SubSequence
+import unreal_engine as ue
+from unreal_engine.classes import MovieSceneCinematicShotTrack, LevelSequenceFactoryNew
+
+#- Create Sequencer
+factory = LevelSequenceFactoryNew()
+seq = factory.factory_create_new('/Game/MasterSequence')
+
+# Add Shot Track
+_MshotTrk = seq.sequencer_add_master_track(MovieSceneCinematicShotTrack)
+
+#- Create Shots
+factoryShot = LevelSequenceFactoryNew()
+shot = factoryShot.factory_create_new('/Game/Shot01')
+
+#- Add SubSequence(Shots) in Master Sequence
+shotSection = _MshotTrk.sequencer_track_add_section()
+shotSection.sequencer_set_section_range(0, 150)
+shotSection.SubSequence = shot
+
+# notify that something changed to the sequence editor 
+shot.sequencer_changed(True)
+seq.sequencer_changed(True)
